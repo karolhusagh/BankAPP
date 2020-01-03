@@ -19,7 +19,7 @@ import java.util.Calendar;
 public class AccessAccount extends JFrame {
     //TEST
     public static void main(String[] args) {
-        new AccessAccount(1);
+        new AccessAccount(9);
     }
 
     private Connection bankConnection;
@@ -149,7 +149,7 @@ public class AccessAccount extends JFrame {
         submit.addActionListener(e ->
         {
             if (TransactionActionListener.actionPerformed.equals("Deposit"))
-                deposit((BigDecimal.valueOf(Long.parseLong(input.getText()))));
+                deposit((new BigDecimal(input.getText())));
             if (TransactionActionListener.actionPerformed.equals("Withdrawal"))
                 areEnoughFundsAvailable();
             if (TransactionActionListener.actionPerformed.equals(""))
@@ -224,7 +224,7 @@ public class AccessAccount extends JFrame {
 
     private void areEnoughFundsAvailable() {
 
-        BigDecimal amountToWithdraw = BigDecimal.valueOf(Long.parseLong((input.getText())));
+        BigDecimal amountToWithdraw = new BigDecimal(input.getText());
 
         String checkFunds = "SELECT balance FROM Bank WHERE account_number = ?";
 
