@@ -9,15 +9,17 @@ public class DatabaseConnection {
 
 
     public Connection DatabaseConnection() {
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:bank.db");
-            //JOptionPane.showMessageDialog(null, "Connected");
-            return connection;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+        if(connection == null){
+            try {
+                Class.forName("org.sqlite.JDBC");
+                connection = DriverManager.getConnection("jdbc:sqlite:bank.db");
+                //JOptionPane.showMessageDialog(null, "Connected");
+                return connection;
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
         }
-        return null;
+        return connection;
     }
 
 }
