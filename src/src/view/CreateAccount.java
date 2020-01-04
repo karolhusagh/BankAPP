@@ -7,10 +7,7 @@ import java.awt.*;
 import java.math.BigDecimal;
 
 
-
-
-public class CreateAccount extends JFrame
-{
+public class CreateAccount extends JFrame {
     private JTextField inputFirstName;
     private JTextField inputLastName;
     private JTextField inputid;
@@ -18,12 +15,11 @@ public class CreateAccount extends JFrame
 
     //TESTING
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         new CreateAccount();
     }
 
-    CreateAccount()  {
+    CreateAccount() {
 
         setSize(450, 200);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -40,8 +36,8 @@ public class CreateAccount extends JFrame
 
         //INPUTS
         inputFirstName = new JTextField(15);
-        inputLastName  = new JTextField(15);
-        inputid    = new JTextField(15);
+        inputLastName = new JTextField(15);
+        inputid = new JTextField(15);
         inputPassword = new JTextField(15);
 
 
@@ -58,7 +54,7 @@ public class CreateAccount extends JFrame
         buttonSubmit.addActionListener(e -> checkClientInfo());
 
 
-        Dimension textFieldDimension = new Dimension(5,0);
+        Dimension textFieldDimension = new Dimension(5, 0);
 
         inputFirstName.setPreferredSize(textFieldDimension);
         inputLastName.setPreferredSize(textFieldDimension);
@@ -66,8 +62,8 @@ public class CreateAccount extends JFrame
         inputPassword.setPreferredSize(textFieldDimension);
 
 
-        panelLabels.setLayout(new GridLayout(4,1));
-        panelInputs.setLayout(new GridLayout(4,1));
+        panelLabels.setLayout(new GridLayout(4, 1));
+        panelInputs.setLayout(new GridLayout(4, 1));
 
 
         panelLabels.add(labelFirstName);
@@ -92,15 +88,11 @@ public class CreateAccount extends JFrame
 
         setVisible(true);
 
-        //connection = new DatabaseConnection();
 
     }
 
-    private void checkClientInfo()
-    {
-        int account_number = 0;
+    private void checkClientInfo() {
         BigDecimal balance = BigDecimal.valueOf(0);
-        boolean informationCorrect;
         String firstName = inputFirstName.getText();
         String lastName = inputLastName.getText();
         String id = inputid.getText();
@@ -109,35 +101,26 @@ public class CreateAccount extends JFrame
         id = id.replaceAll("[- ]", "");
 
 
-        if (firstName.length() == 0)
-        {
+        if (firstName.length() == 0) {
             JOptionPane.showMessageDialog(null, "First name invalid");
             System.out.println("first name length: " + firstName.length());
-        } else if (lastName.length() == 0)
-        {
+        } else if (lastName.length() == 0) {
             JOptionPane.showMessageDialog(null, "Last name invalid");
             System.out.println("last name length: " + lastName.length());
-        } else if (id.trim().length() != 9)
-        {
+        } else if (id.trim().length() != 9) {
             JOptionPane.showMessageDialog(null, "ID invalid");
-        } else if (password.length() == 0){
+        } else if (password.length() == 0) {
             JOptionPane.showMessageDialog(null, "Password invalid");
             System.out.println("Password name length: " + password.length());
 
+        } else {
+
+            CreateClient createClient = new CreateClient();
+            createClient.AddClient(firstName, lastName, id, password, balance);
+
         }
-        else
-        {
-            informationCorrect = true;
-
-
-            if (informationCorrect)
-            {
-                new CreateClient(firstName, lastName, id,password, account_number, balance);
-            }
-
-            }
-        }
-
     }
+
+}
 
 

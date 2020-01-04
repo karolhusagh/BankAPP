@@ -8,11 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Date;
+import java.sql.*;
 import java.util.Calendar;
 
 
@@ -22,7 +18,7 @@ public class AccessAccount extends JFrame {
         new AccessAccount(9);
     }
 
-    private Connection bankConnection;
+    private Connection bankConnection = DatabaseConnection.getConnection();
     private PreparedStatement preparedStatementClient;
 
     protected static JTextArea results;
@@ -37,15 +33,10 @@ public class AccessAccount extends JFrame {
 
         createView();
 
-        connectToDatabase();
-
         listClients();
 
     }
 
-    private void connectToDatabase() {
-        bankConnection = new DatabaseConnection().DatabaseConnection();
-    }
 
     private void showBalance() {
 
@@ -179,7 +170,6 @@ public class AccessAccount extends JFrame {
 
 
     private void deposit(BigDecimal depositAmount) {
-        int Transnum = 1; // do zrobienia zeby liczylo
 
         java.util.Date dt = new java.util.Date();
 
@@ -190,7 +180,7 @@ public class AccessAccount extends JFrame {
 
         String updateStatement = "UPDATE Bank SET balance = balance + ? where account_number = ?";
 
-        String depositStatement = "INSERT INTO Transactions (account_number,tran_num,tran_type, tran_value, tran_date ) values(?,?,?,?,?)";
+        String depositStatement = "INSERT INTO Transactions (account_number,tran_type, tran_value, tran_date ) values(?,?,?,?)";
 
 
         try {
@@ -248,7 +238,6 @@ public class AccessAccount extends JFrame {
 
     private void withdrawal(BigDecimal withdrawlAmount) {
 
-        int Transnum = 1; //cza zrobic by zliczalo
         java.util.Date dt = new java.util.Date();
 
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -257,7 +246,7 @@ public class AccessAccount extends JFrame {
 
         String updateStatement = "UPDATE Bank SET balance = balance - ? where account_number = ?";
 
-        String withdrawalStatement = "INSERT INTO Transactions (account_number,tran_num,tran_type, tran_value, tran_date ) values(?,?,?,?,?)";
+        String withdrawalStatement = "INSERT INTO Transactions (account_number, tran_type, tran_value, tran_date ) values(?,?,?,?)";
 
         try {
             PreparedStatement preparedStatementWithdrawal = bankConnection.prepareStatement(withdrawalStatement);
@@ -265,10 +254,9 @@ public class AccessAccount extends JFrame {
 
             //WITHDRAWAL
             preparedStatementWithdrawal.setInt(1, getAccountNumber());
-            preparedStatementWithdrawal.setInt(2, Transnum);
-            preparedStatementWithdrawal.setString(3, "withdrawal");
-            preparedStatementWithdrawal.setBigDecimal(4, withdrawlAmount);
-            preparedStatementWithdrawal.setString(5, currentTime);
+            preparedStatementWithdrawal.setString(2, "withdrawal");
+            preparedStatementWithdrawal.setBigDecimal(3, withdrawlAmount);
+            preparedStatementWithdrawal.setString(4, currentTime);
 
             //UPDATE
             preparedStatementUpdate.setBigDecimal(1, withdrawlAmount);
