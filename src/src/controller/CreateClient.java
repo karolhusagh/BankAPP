@@ -20,7 +20,7 @@ public class CreateClient {
                 preparedStatementClient.setString(1, firstName);
                 preparedStatementClient.setString(2, lastName);
                 preparedStatementClient.setString(3, id);
-                preparedStatementClient.setString(4, password);
+                preparedStatementClient.setString(4, LoginSystem.getMd5(password) );
                 preparedStatementClient.setBigDecimal(5, balance);
 
                 preparedStatementClient.execute();

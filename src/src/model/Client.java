@@ -1,6 +1,7 @@
 package model;
 
 import java.math.BigDecimal;
+import java.sql.ResultSet;
 
 public class Client {
     private String firstName;
@@ -9,6 +10,15 @@ public class Client {
     private String password;
     private String accountNumber;
     private BigDecimal balance;
+
+    public Client(String firstName, String lastName, String id, String password, String accountNumber, BigDecimal balance){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.id = id;
+        this.password = password;
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
