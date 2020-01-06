@@ -24,7 +24,7 @@ public class LoginSystem {
     }
 
     public static boolean checkPasswd(String login, String passwd){
-        return Objects.equals(SQLquery.getPasswd(login), getMd5(passwd));
+        return Objects.equals(SQLquery.getPassword(login), getMd5(passwd));
     }
 
 

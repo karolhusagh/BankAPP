@@ -1,17 +1,17 @@
 package model;
 
 import java.math.BigDecimal;
-import java.sql.ResultSet;
+import controller.LoginSystem;
 
 public class Client {
     private String firstName;
     private String lastName;
     private String id;
     private String password;
-    private String accountNumber;
+    private Integer accountNumber;
     private BigDecimal balance;
 
-    public Client(String firstName, String lastName, String id, String password, String accountNumber, BigDecimal balance){
+    public Client(String firstName, String lastName, String id, String password, Integer accountNumber, BigDecimal balance){
         this.firstName = firstName;
         this.lastName = lastName;
         this.id = id;
@@ -33,11 +33,7 @@ public class Client {
     }
 
     public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+        this.password = LoginSystem.getMd5(password);
     }
 
     public void setBalance(BigDecimal balance) {
@@ -60,11 +56,15 @@ public class Client {
         return password;
     }
 
-    public String getAccountNumber() {
+    public Integer getAccountNumber() {
         return accountNumber;
     }
 
     public BigDecimal getBalance() {
         return balance;
+    }
+
+    public void update(){
+        SQLquery.update(this);
     }
 }

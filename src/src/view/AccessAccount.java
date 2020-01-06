@@ -19,14 +19,25 @@ public class AccessAccount extends JFrame {
     }
 
     private Connection bankConnection = DatabaseConnection.getConnection();
+
+    //????????????
     private PreparedStatement preparedStatementClient;
 
+
+    //??????????
     protected static JTextArea results;
     private JTextField input;
     private JPanel panelTop = new JPanel();
 
+
+
+    //???????????
     private int accountNumber;
     private BigDecimal accountBalance;
+
+
+
+
 
     public AccessAccount(int accountNumber) {
         this.setAccountNumber(accountNumber);
@@ -36,6 +47,8 @@ public class AccessAccount extends JFrame {
         listClients();
 
     }
+
+
 
 
     private void showBalance() {
@@ -60,6 +73,8 @@ public class AccessAccount extends JFrame {
     }
 
 
+
+
     private void listClients() {
         try {
 
@@ -81,6 +96,9 @@ public class AccessAccount extends JFrame {
             e.printStackTrace();
         }
     }
+
+
+
 
     private void createMenu() {
 
@@ -236,6 +254,7 @@ public class AccessAccount extends JFrame {
     }
 
 
+
     private void withdrawal(BigDecimal withdrawlAmount) {
 
         java.util.Date dt = new java.util.Date();
@@ -278,6 +297,9 @@ public class AccessAccount extends JFrame {
 
     }
 
+
+
+
     public int getAccountNumber() {
         return accountNumber;
     }
@@ -293,7 +315,6 @@ public class AccessAccount extends JFrame {
     public void setAccountBalance(BigDecimal accountBalance) {
         this.accountBalance = accountBalance;
     }
-
 
     static class TransactionActionListener implements ActionListener {
         static String actionPerformed = "";
