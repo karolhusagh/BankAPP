@@ -1,7 +1,12 @@
 package model;
 
 import controller.LoginSystem;
+import org.sqlite.JDBC;
+import org.sqlite.core.DB;
+import view.AccessAccount;
+import view.ShowHistory;
 
+import javax.swing.table.DefaultTableModel;
 import java.math.BigDecimal;
 import java.sql.*;
 
@@ -11,7 +16,7 @@ public class SQLquery {
     //powinno byc login???????
     public static String getPassword(String match) {
 
-        String accountInfoStatement = "SELECT password from Bank WHERE first_name = ?";
+        String accountInfoStatement = "SELECT password from Bank WHERE account_number = ?";
 
         try {
             PreparedStatement preparedStatement = bankConnection.prepareStatement(accountInfoStatement);
@@ -120,7 +125,7 @@ public class SQLquery {
 
     public static void update(Client client) {
 
-        String updateStatement = "UPDATE Bank SET first_name = ?, last_name = ?, id = ?, password = ?, balance = ? WHERE account_number = ?";
+        String updateStatement = "UPDATE Bank SET first_name = ?, last_name = ?, account_number, password = ?, balance = ? WHERE id = ?";
 
 
         try {
@@ -144,9 +149,30 @@ public class SQLquery {
 
     }
 
-    //TEST
-    public static void main(String[] args) {
-        SQLquery sqLquery = new SQLquery();
-        System.out.println(sqLquery.doesClientExist("141414141"));
+    public static DefaultTableModel ShowHistory(DefaultTableModel defaultTableModel,int id){
+
+
+
+        String transactions = "SELECT * FROM Transactions WHERE account_number = ?";
+        Object[] columnData = new Object[5];
+        try{
+            PreparedStatement preparedStatement = bankConnection.prepareStatement(transactions);
+            preparedStatement.setString(1, String.valueOf(id));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                columnData[0] = resultSet.getInt(1);
+                columnData[1] = resultSet.getInt(2);
+                columnData[2] = resultSet.getString(3);
+                columnData[3] = resultSet.getBigDecimal(4);
+                columnData[4] = resultSet.getString(5);
+                defaultTableModel.addRow(columnData);
+            }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+        return defaultTableModel;
+
+        }
+
     }
-}
+

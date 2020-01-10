@@ -8,7 +8,7 @@ public class Client {
     private String lastName;
     private String id;
     private String password;
-    private Integer accountNumber;
+    private static Integer accountNumber;
     private BigDecimal balance;
 
     public Client(String firstName, String lastName, String id, String password, Integer accountNumber, BigDecimal balance){
@@ -56,7 +56,7 @@ public class Client {
         return password;
     }
 
-    public Integer getAccountNumber() {
+    public static Integer getAccountNumber() {
         return accountNumber;
     }
 

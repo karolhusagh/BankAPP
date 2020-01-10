@@ -10,6 +10,7 @@ import java.sql.*;
 public class CreateClient {
     private Connection connection = DatabaseConnection.getConnection();
 
+
     public void AddClient(String firstName, String lastName, String id, String password, BigDecimal balance) {
         if(doesClientExist(id)) return;
 

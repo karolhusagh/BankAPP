@@ -32,6 +32,6 @@ public class LoginSystem {
 
     public static void main(String[] args) {
         String s = "abc";
-        System.out.println(checkPasswd("test1", "abc"));
+        System.out.println(checkPasswd("3", "dsad"));
     }
 }

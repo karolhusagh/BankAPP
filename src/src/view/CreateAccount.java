@@ -1,10 +1,13 @@
 package view;
 
 import controller.CreateClient;
+import model.Client;
+import model.SQLquery;
 
 import javax.swing.*;
 import java.awt.*;
 import java.math.BigDecimal;
+
 
 
 public class CreateAccount extends JFrame {
@@ -21,7 +24,7 @@ public class CreateAccount extends JFrame {
 
     CreateAccount() {
 
-        setSize(450, 200);
+        setSize(500, 300);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -33,6 +36,8 @@ public class CreateAccount extends JFrame {
         JLabel labelSelection = new JLabel("Please make a selection below");
         JLabel labelid = new JLabel("ID: ");
         JLabel labelPassword = new JLabel("Password: ");
+        ImageIcon IMGlogo = new ImageIcon("img\\Bankimg.png");
+        JLabel logo = new JLabel(IMGlogo,JLabel.CENTER);
 
         //INPUTS
         inputFirstName = new JTextField(15);
@@ -49,18 +54,13 @@ public class CreateAccount extends JFrame {
 
 
         //BUTTONS
-        JButton buttonClear = new JButton("Clear");
+        JButton buttonClear = new JButton("Close");
+        buttonClear.addActionListener(e -> {
+            dispose();
+            new LoginAccount();
+        });
         JButton buttonSubmit = new JButton("Submit");
         buttonSubmit.addActionListener(e -> checkClientInfo());
-
-
-        Dimension textFieldDimension = new Dimension(5, 0);
-
-        inputFirstName.setPreferredSize(textFieldDimension);
-        inputLastName.setPreferredSize(textFieldDimension);
-        inputid.setPreferredSize(textFieldDimension);
-        inputPassword.setPreferredSize(textFieldDimension);
-
 
         panelLabels.setLayout(new GridLayout(4, 1));
         panelInputs.setLayout(new GridLayout(4, 1));
@@ -70,6 +70,7 @@ public class CreateAccount extends JFrame {
         panelLabels.add(labelLastName);
         panelLabels.add(labelid);
         panelLabels.add(labelPassword);
+        panelTop.add(logo);
         panelTop.add(labelSelection);
 
 
@@ -108,7 +109,7 @@ public class CreateAccount extends JFrame {
             JOptionPane.showMessageDialog(null, "Last name invalid");
             System.out.println("last name length: " + lastName.length());
         } else if (id.trim().length() != 9) {
-            JOptionPane.showMessageDialog(null, "ID invalid");
+            JOptionPane.showMessageDialog(null, "ID length must be 9");
         } else if (password.length() == 0) {
             JOptionPane.showMessageDialog(null, "Password invalid");
             System.out.println("Password name length: " + password.length());
@@ -117,6 +118,7 @@ public class CreateAccount extends JFrame {
 
             CreateClient createClient = new CreateClient();
             createClient.AddClient(firstName, lastName, id, password, balance);
+
 
         }
     }

@@ -6,16 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
 import java.math.BigDecimal;
 import java.sql.*;
-import java.util.Calendar;
 
 
 public class AccessAccount extends JFrame {
     //TEST
     public static void main(String[] args) {
-        new AccessAccount(9);
+        new AccessAccount(1);
     }
 
     private Connection bankConnection = DatabaseConnection.getConnection();
@@ -27,7 +25,9 @@ public class AccessAccount extends JFrame {
     //??????????
     protected static JTextArea results;
     private JTextField input;
+    private JPanel panelEAST = new JPanel();
     private JPanel panelTop = new JPanel();
+
 
 
 
@@ -103,12 +103,18 @@ public class AccessAccount extends JFrame {
     private void createMenu() {
 
         JMenuBar menuBar = new JMenuBar();
+        menuBar.setLayout(new GridLayout(0,1));
 
-        panelTop.add(menuBar);
+        panelEAST.add(menuBar);
     }
 
     private void createPanels() {
         //TOP
+        ImageIcon IMGlogo = new ImageIcon("img\\Bankimg.png");
+        JLabel logo = new JLabel(IMGlogo,JLabel.CENTER);
+        panelTop.add(logo);
+        panelTop.setBackground(Color.WHITE);
+        add(panelTop, BorderLayout.NORTH);
 
         JButton checkAcctInfo = new JButton("Account Info");
         checkAcctInfo.addActionListener(e -> showBalance());
@@ -117,25 +123,37 @@ public class AccessAccount extends JFrame {
 
         JButton withdrawal = new JButton("Withdrawal");
 
+        JButton transfer = new JButton("New Transfer");
+        transfer.addActionListener(e -> new TransferAccount());
+
+        JButton history = new JButton("Show History");
+        history.addActionListener(e -> new ShowHistory(accountNumber));
+
+        JButton resetPasswd = new JButton("Reset Password");
+        resetPasswd.addActionListener(e -> new ResetPassword());
+
+        JButton clear = new JButton("Clear Window");
+        clear.addActionListener(e -> clear());
+
         JButton logOut = new JButton("Log Out");
+        logOut.addActionListener(e -> {
+            dispose();
+            new LoginAccount();});
 
-        logOut.addActionListener(e ->
-        {
-            results.append("Logging out of account");
-            try {
-                Thread.sleep(2000);
-                dispose();
-            } catch (InterruptedException e2) {
-                e2.printStackTrace();
-            }
-        });
 
-        panelTop.add(checkAcctInfo);
-        panelTop.add(deposit);
-        panelTop.add(withdrawal);
-        panelTop.add(logOut);
+        panelEAST.setLayout(new GridLayout(16,1));
+        panelEAST.add(checkAcctInfo);
+        panelEAST.add(deposit);
+        panelEAST.add(withdrawal);
+        panelEAST.add(transfer);
+        panelEAST.add(history);
+        panelEAST.add(resetPasswd);
+        panelEAST.add(clear);
+        panelEAST.add(logOut);
+        panelEAST.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelEAST.setBackground(Color.WHITE);
 
-        add(panelTop, BorderLayout.NORTH);
+        add(panelEAST, BorderLayout.CENTER);
 
 
         TransactionActionListener transactionActionListener = new TransactionActionListener();
@@ -143,14 +161,14 @@ public class AccessAccount extends JFrame {
         checkAcctInfo.addActionListener(transactionActionListener);
         deposit.addActionListener(transactionActionListener);
         withdrawal.addActionListener(transactionActionListener);
-        logOut.addActionListener(transactionActionListener);
 
         // MID
         results = new JTextArea(30, 30);
         JPanel panelCenter = new JPanel();
         panelCenter.add(results);
+        panelCenter.setBackground(Color.WHITE);
 
-        add(panelCenter, BorderLayout.CENTER);
+        add(panelCenter, BorderLayout.WEST);
 
         // BOTTOM
         input = new JTextField(15);
@@ -169,17 +187,22 @@ public class AccessAccount extends JFrame {
         JPanel panelBottom = new JPanel();
         panelBottom.add(input);
         panelBottom.add(submit);
+        panelBottom.setBackground(Color.WHITE);
         add(panelBottom, BorderLayout.SOUTH);
 
 
         setVisible(true);
     }
 
+    private void clear() {
+        results.setText("");
+    }
+
     private void createView() {
-        setSize(650, 600);
-        setTitle("Access account");
-        setLocationRelativeTo(null);
+        setSize(500, 600);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setResizable(false);
 
         createMenu();
 
@@ -209,10 +232,9 @@ public class AccessAccount extends JFrame {
 
             //DEPOSIT
             preparedStatementDeposit.setInt(1, getAccountNumber());
-            preparedStatementDeposit.setInt(2, 1);
-            preparedStatementDeposit.setString(3, "deposit");
-            preparedStatementDeposit.setBigDecimal(4, depositAmount);
-            preparedStatementDeposit.setString(5,currentTime);
+            preparedStatementDeposit.setString(2, "deposit");
+            preparedStatementDeposit.setBigDecimal(3, depositAmount);
+            preparedStatementDeposit.setString(4,currentTime);
 
             //UPDATE
             preparedStatementUpdate.setBigDecimal(1, depositAmount);
