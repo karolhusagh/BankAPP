@@ -1,15 +1,17 @@
 package view;
 
-import model.SQLquery;
+import model.Client;
 
 import javax.swing.*;
 import java.awt.*;
+import java.math.BigDecimal;
 
-public class TransferAccount extends JFrame {
+class TransferAccount extends JFrame {
     private JTextField inputidFrom;
     private JTextField inputidTo;
     private JTextField inputamount;
-    TransferAccount(){
+
+    TransferAccount(Client client) {
         setSize(500, 300);
         //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -18,7 +20,7 @@ public class TransferAccount extends JFrame {
 
         // Import ImageIcon
         ImageIcon IMGlogo = new ImageIcon("img\\Bankimg.png");
-        JLabel logo = new JLabel(IMGlogo,JLabel.CENTER);
+        JLabel logo = new JLabel(IMGlogo, JLabel.CENTER);
 
 
         //labels
@@ -36,7 +38,7 @@ public class TransferAccount extends JFrame {
         JButton buttonConfirm = new JButton("Confirm");
         JButton buttonClose = new JButton("Close");
 
-        //buttonConfirm.addActionListener(e -> TransferCheck(inputidFrom,));
+        buttonConfirm.addActionListener(e -> transaction(client));
 
         //PANELS
         JPanel panelButtons = new JPanel();
@@ -61,8 +63,8 @@ public class TransferAccount extends JFrame {
         panelButtons.add(buttonClose);
         buttonClose.addActionListener(e -> dispose());
 
-        panelEAST.setLayout(new GridLayout(3,1));
-        panelWEST.setLayout(new GridLayout(3,1));
+        panelEAST.setLayout(new GridLayout(3, 1));
+        panelWEST.setLayout(new GridLayout(3, 1));
         add(BorderLayout.NORTH, panelTop);
         add(BorderLayout.CENTER, panelEAST);
         add(BorderLayout.WEST, panelWEST);
@@ -70,10 +72,13 @@ public class TransferAccount extends JFrame {
 
         setVisible(true);
 
-
     }
 
-    public static void main(String[] args) {
-        new TransferAccount();
+    private void transaction(Client client) {
+        if (inputidFrom.getText().equals(client.getId())) {
+            client.transaction(Integer.parseInt(inputidTo.getText()), new BigDecimal(inputamount.getText()));
+        } else {
+            JOptionPane.showMessageDialog(null, "Wrong ID");
+        }
     }
 }

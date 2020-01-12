@@ -1,7 +1,8 @@
 package view;
 
-import javax.swing.*;
+import model.SQLquery;
 
+import javax.swing.*;
 import java.awt.*;
 
 import static controller.LoginSystem.checkPasswd;
@@ -13,17 +14,16 @@ public class LoginAccount extends JFrame {
     public static void main(String[] args) {
         new LoginAccount();
     }
+
     LoginAccount() {
         setSize(500, 300);
-        //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Log in to account");
 
         // Import ImageIcon
         ImageIcon IMGlogo = new ImageIcon("img\\Bankimg.png");
-        JLabel logo = new JLabel(IMGlogo,JLabel.CENTER);
-
+        JLabel logo = new JLabel(IMGlogo, JLabel.CENTER);
 
         //labels
         JLabel labelaccnum = new JLabel("ID number: ");
@@ -47,11 +47,6 @@ public class LoginAccount extends JFrame {
         JButton buttonLogin = new JButton("Login");
         JButton buttonCreate = new JButton("Create");
 
-        buttonLogin.addActionListener(e -> checkPasswd(inputid.getText(),String.copyValueOf(inputpasswd.getPassword())));
-        buttonCreate.addActionListener(e -> {
-                    dispose();
-                    new CreateAccount();});
-
         Dimension textFieldDimension = new Dimension(15, 15);
 
         inputid.setPreferredSize(textFieldDimension);
@@ -66,8 +61,8 @@ public class LoginAccount extends JFrame {
         panelButtons.add(buttonLogin);
         panelButtons.add(buttonCreate);
         panelTop.add(logo);
-        panelLabels.setLayout(new GridLayout(2,1));
-        panelInputs.setLayout(new GridLayout(2,1));
+        panelLabels.setLayout(new GridLayout(2, 1));
+        panelInputs.setLayout(new GridLayout(2, 1));
 
 
         add(BorderLayout.NORTH, panelTop);
@@ -77,6 +72,20 @@ public class LoginAccount extends JFrame {
 
         setVisible(true);
 
-    }
+        buttonLogin.addActionListener(e -> {
+            if (checkPasswd(inputid.getText(), String.copyValueOf(inputpasswd.getPassword()))) {
+                new AccessAccount(SQLquery.getAccount(inputid.getText()));
+                dispose();
+            } else {
+                inputid.setText("");
+                inputpasswd.setText("");
+                JOptionPane.showMessageDialog(null, "User not found");
+            }
+        });
 
+        buttonCreate.addActionListener(e -> {
+            dispose();
+            new CreateAccount();
+        });
+    }
 }

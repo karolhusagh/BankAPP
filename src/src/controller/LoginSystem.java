@@ -1,6 +1,7 @@
 package controller;
 
 import model.SQLquery;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -23,15 +24,7 @@ public class LoginSystem {
         return null;
     }
 
-    public static boolean checkPasswd(String login, String passwd){
+    public static boolean checkPasswd(String login, String passwd) {
         return Objects.equals(SQLquery.getPassword(login), getMd5(passwd));
-    }
-
-
-
-
-    public static void main(String[] args) {
-        String s = "abc";
-        System.out.println(checkPasswd("3", "dsad"));
     }
 }

@@ -1,26 +1,16 @@
 package view;
 
-import controller.CreateClient;
-import model.Client;
 import model.SQLquery;
 
 import javax.swing.*;
 import java.awt.*;
 import java.math.BigDecimal;
 
-
-
-public class CreateAccount extends JFrame {
+class CreateAccount extends JFrame {
     private JTextField inputFirstName;
     private JTextField inputLastName;
     private JTextField inputid;
     private JTextField inputPassword;
-
-    //TESTING
-
-    public static void main(String[] args) {
-        new CreateAccount();
-    }
 
     CreateAccount() {
 
@@ -37,7 +27,7 @@ public class CreateAccount extends JFrame {
         JLabel labelid = new JLabel("ID: ");
         JLabel labelPassword = new JLabel("Password: ");
         ImageIcon IMGlogo = new ImageIcon("img\\Bankimg.png");
-        JLabel logo = new JLabel(IMGlogo,JLabel.CENTER);
+        JLabel logo = new JLabel(IMGlogo, JLabel.CENTER);
 
         //INPUTS
         inputFirstName = new JTextField(15);
@@ -59,6 +49,7 @@ public class CreateAccount extends JFrame {
             dispose();
             new LoginAccount();
         });
+
         JButton buttonSubmit = new JButton("Submit");
         buttonSubmit.addActionListener(e -> checkClientInfo());
 
@@ -93,7 +84,6 @@ public class CreateAccount extends JFrame {
     }
 
     private void checkClientInfo() {
-        BigDecimal balance = BigDecimal.valueOf(0);
         String firstName = inputFirstName.getText();
         String lastName = inputLastName.getText();
         String id = inputid.getText();
@@ -115,14 +105,9 @@ public class CreateAccount extends JFrame {
             System.out.println("Password name length: " + password.length());
 
         } else {
-
-            CreateClient createClient = new CreateClient();
-            createClient.AddClient(firstName, lastName, id, password, balance);
-
-
+            SQLquery.addClient(firstName, lastName, id, password, BigDecimal.valueOf(0));
         }
     }
-
 }
 
 
