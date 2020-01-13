@@ -1,6 +1,6 @@
 package view;
 
-import model.SQLquery;
+import controller.SQLquery;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

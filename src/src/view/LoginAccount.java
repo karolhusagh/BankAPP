@@ -47,7 +47,14 @@ public class LoginAccount extends JFrame {
         JButton buttonLogin = new JButton("Login");
         JButton buttonCreate = new JButton("Create");
 
-        buttonLogin.addActionListener(e -> checkPasswd(inputid.getText(),String.copyValueOf(inputpasswd.getPassword())));
+        buttonLogin.addActionListener(e -> {
+            if(checkPasswd(inputid.getText(),String.copyValueOf(inputpasswd.getPassword()))==true){
+            dispose();
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Wrong Login or Password!");
+            }
+        });
         buttonCreate.addActionListener(e -> {
                     dispose();
                     new CreateAccount();});

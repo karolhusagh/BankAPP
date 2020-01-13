@@ -1,8 +1,8 @@
 package view;
 
 import controller.CreateClient;
+import controller.SQLquery;
 import model.Client;
-import model.SQLquery;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ public class CreateAccount extends JFrame {
     private JTextField inputFirstName;
     private JTextField inputLastName;
     private JTextField inputid;
-    private JTextField inputPassword;
+    private JPasswordField inputPassword;
 
     //TESTING
 
@@ -43,7 +43,7 @@ public class CreateAccount extends JFrame {
         inputFirstName = new JTextField(15);
         inputLastName = new JTextField(15);
         inputid = new JTextField(15);
-        inputPassword = new JTextField(15);
+        inputPassword = new JPasswordField(15);
 
 
         //PANELS
@@ -115,9 +115,11 @@ public class CreateAccount extends JFrame {
             System.out.println("Password name length: " + password.length());
 
         } else {
-
+            dispose();
             CreateClient createClient = new CreateClient();
             createClient.AddClient(firstName, lastName, id, password, balance);
+            SQLquery.selectCustomer(id);
+            new AccessAccount(Client.getAccountNumber());
 
 
         }

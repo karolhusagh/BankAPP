@@ -1,13 +1,16 @@
 package view;
 
-import model.SQLquery;
+import model.Client;
 
 import javax.swing.*;
 import java.awt.*;
+import java.math.BigDecimal;
+
+import static controller.SQLquery.TransferCheck;
 
 public class TransferAccount extends JFrame {
-    private JTextField inputidFrom;
-    private JTextField inputidTo;
+    private JTextField inputaccFrom;
+    private JTextField inputaccTo;
     private JTextField inputamount;
     TransferAccount(){
         setSize(500, 300);
@@ -28,15 +31,15 @@ public class TransferAccount extends JFrame {
 
 
         //input
-        inputidFrom = new JTextField(1);
-        inputidTo = new JTextField(1);
+        inputaccFrom = new JTextField(1);
+        inputaccTo = new JTextField(1);
         inputamount = new JTextField(1);
 
         //buttons
         JButton buttonConfirm = new JButton("Confirm");
         JButton buttonClose = new JButton("Close");
 
-        //buttonConfirm.addActionListener(e -> TransferCheck(inputidFrom,));
+        buttonConfirm.addActionListener(e -> TransferCheck(Integer.parseInt(inputaccFrom.getText()), Integer.parseInt(inputaccTo.getText()), new BigDecimal(inputamount.getText())));
 
         //PANELS
         JPanel panelButtons = new JPanel();
@@ -53,8 +56,8 @@ public class TransferAccount extends JFrame {
         panelWEST.add(labelidTo);
         panelWEST.add(labelamount);
 
-        panelEAST.add(inputidFrom);
-        panelEAST.add(inputidTo);
+        panelEAST.add(inputaccFrom);
+        panelEAST.add(inputaccTo);
         panelEAST.add(inputamount);
 
         panelButtons.add(buttonConfirm);

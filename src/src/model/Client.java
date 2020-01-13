@@ -2,13 +2,14 @@ package model;
 
 import java.math.BigDecimal;
 import controller.LoginSystem;
+import controller.SQLquery;
 
 public class Client {
+    private static int accountNumber;
     private String firstName;
     private String lastName;
     private String id;
     private String password;
-    private static Integer accountNumber;
     private BigDecimal balance;
 
     public Client(String firstName, String lastName, String id, String password, Integer accountNumber, BigDecimal balance){
@@ -56,10 +57,7 @@ public class Client {
         return password;
     }
 
-    public static Integer getAccountNumber() {
-        return accountNumber;
-    }
-
+    public static int getAccountNumber() {return accountNumber;}
     public BigDecimal getBalance() {
         return balance;
     }

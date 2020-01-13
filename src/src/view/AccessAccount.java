@@ -13,7 +13,7 @@ import java.sql.*;
 public class AccessAccount extends JFrame {
     //TEST
     public static void main(String[] args) {
-        new AccessAccount(1);
+        new AccessAccount(2);
     }
 
     private Connection bankConnection = DatabaseConnection.getConnection();
