@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-class DatabaseConnection {
+public class DatabaseConnection {
     static private Connection connection = null;
 
     static Connection getConnection() {

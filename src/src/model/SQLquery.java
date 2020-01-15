@@ -1,6 +1,8 @@
 package model;
 
 import controller.LoginSystem;
+import model.Client;
+import model.DatabaseConnection;
 
 import javax.swing.table.DefaultTableModel;
 import java.math.BigDecimal;
@@ -200,6 +202,7 @@ public class SQLquery {
             PreparedStatement preparedStatementUpdate = bankConnection.prepareStatement(updateStatement);
 
             preparedStatementUpdate.setString(1, LoginSystem.getMd5(password));
+            System.out.println(client.getAccountNumber());
             preparedStatementUpdate.setInt(2, client.getAccountNumber());
         } catch (SQLException e) {
             e.printStackTrace();

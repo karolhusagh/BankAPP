@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 
+import static java.math.RoundingMode.DOWN;
+
 
 class AccessAccount extends JFrame {
     private Client client;
@@ -33,6 +35,7 @@ class AccessAccount extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
+        setTitle("Account: " + client.getAccountNumber());
 
         createMenu();
 
@@ -55,7 +58,7 @@ class AccessAccount extends JFrame {
         panelTop.setBackground(Color.WHITE);
         add(panelTop, BorderLayout.NORTH);
 
-        JButton checkAcctInfo = new JButton("Account Info");
+        JButton checkAcctInfo = new JButton("Balance");
         checkAcctInfo.addActionListener(e -> showBalance());
 
         JButton deposit = new JButton("Deposit");
@@ -116,12 +119,17 @@ class AccessAccount extends JFrame {
         JButton submit = new JButton("Submit");
         submit.addActionListener(e ->
         {
-            if (TransactionActionListener.actionPerformed.equals("Deposit"))
-                client.deposit(new BigDecimal(input.getText()));
-            if (TransactionActionListener.actionPerformed.equals("Withdrawal"))
-                client.withdrawal((new BigDecimal(input.getText())));
-            if (TransactionActionListener.actionPerformed.equals(""))
-                results.append("Please make a selection above \n");
+            try {
+                if (TransactionActionListener.actionPerformed.equals("Deposit")) {
+                    client.deposit(new BigDecimal(input.getText().trim().replace(",", ".")).setScale(2, DOWN));
+                }
+                if (TransactionActionListener.actionPerformed.equals("Withdrawal"))
+                    client.withdrawal((new BigDecimal(input.getText().trim().replace(",", ".")).setScale(2, DOWN)));
+                if (TransactionActionListener.actionPerformed.equals(""))
+                    results.append("Please make a selection above \n");
+            }catch (NumberFormatException NFE){
+                JOptionPane.showMessageDialog(null,"Enter proper value!");
+            }
         });
 
 
@@ -141,6 +149,9 @@ class AccessAccount extends JFrame {
 
     private void clear() {
         results.setText("");
+        results.append("Client info: ");
+        results.append(client.getFirstName() + " " + client.getLastName() + "\n" +
+                "Account number: " + client.getAccountNumber() + "\n");
     }
 
     static class TransactionActionListener implements ActionListener {

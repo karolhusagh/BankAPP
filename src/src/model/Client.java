@@ -76,8 +76,8 @@ public class Client {
         }
 
         SQLquery.transaction(toNumber, amount);
-        SQLquery.addTransaction(amount, "transaction to " + toNumber, accountNumber);
-        SQLquery.addTransaction(amount, "transaction from " + accountNumber, toNumber);
+        SQLquery.addTransaction(amount, "Transaction to account: " + toNumber, accountNumber);
+        SQLquery.addTransaction(amount, "Transaction from account: " + accountNumber, toNumber);
         balance = balance.subtract(amount);
         update();
     }

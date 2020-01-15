@@ -79,7 +79,7 @@ public class LoginAccount extends JFrame {
             } else {
                 inputid.setText("");
                 inputpasswd.setText("");
-                JOptionPane.showMessageDialog(null, "User not found");
+                JOptionPane.showMessageDialog(null, "Wrong ID or password!");
             }
         });
 

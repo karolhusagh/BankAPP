@@ -54,7 +54,11 @@ class ResetPassword extends JFrame {
         panelEAST.add(inputpasswdnew);
 
         panelButtons.add(buttonConfirm);
-        buttonConfirm.addActionListener(e -> change(client));
+        buttonConfirm.addActionListener(e -> {
+            change(client);
+            JOptionPane.showMessageDialog(null,"Password reset successfully");
+            dispose();
+        });
 
         panelButtons.add(buttonClose);
         buttonClose.addActionListener(e -> dispose());

@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.math.BigDecimal;
 
+import static java.math.RoundingMode.DOWN;
+
 class TransferAccount extends JFrame {
     private JTextField inputidFrom;
     private JTextField inputidTo;
@@ -24,8 +26,8 @@ class TransferAccount extends JFrame {
 
 
         //labels
-        JLabel labelidFrom = new JLabel("Your ID number: ");
-        JLabel labelidTo = new JLabel("To account ID number: ");
+        JLabel labelidFrom = new JLabel("Your Account Number : ");
+        JLabel labelidTo = new JLabel("To Account Number: ");
         JLabel labelamount = new JLabel("Enter amount: ");
 
 
@@ -38,7 +40,12 @@ class TransferAccount extends JFrame {
         JButton buttonConfirm = new JButton("Confirm");
         JButton buttonClose = new JButton("Close");
 
-        buttonConfirm.addActionListener(e -> transaction(client));
+        buttonConfirm.addActionListener(e -> {
+            transaction(client);
+            JOptionPane.showMessageDialog(null,"Transfer ended successfully");
+            dispose();
+
+        });
 
         //PANELS
         JPanel panelButtons = new JPanel();
@@ -75,10 +82,14 @@ class TransferAccount extends JFrame {
     }
 
     private void transaction(Client client) {
-        if (inputidFrom.getText().equals(client.getId())) {
-            client.transaction(Integer.parseInt(inputidTo.getText()), new BigDecimal(inputamount.getText()));
-        } else {
-            JOptionPane.showMessageDialog(null, "Wrong ID");
+        try{
+        if (Integer.valueOf(inputidFrom.getText()).equals(client.getAccountNumber()))
+            client.transaction(Integer.parseInt(inputidTo.getText()), new BigDecimal(inputamount.getText().trim().replace(",", ".")).setScale(2, DOWN));
+        else {
+            JOptionPane.showMessageDialog(null, "Wrong account number!");
         }
+        } catch(NumberFormatException NFE){
+                JOptionPane.showMessageDialog(null,"Enter proper value!");
+            }
     }
 }

@@ -10,7 +10,7 @@ class CreateAccount extends JFrame {
     private JTextField inputFirstName;
     private JTextField inputLastName;
     private JTextField inputid;
-    private JTextField inputPassword;
+    private JPasswordField inputPassword;
 
     CreateAccount() {
 
@@ -33,7 +33,7 @@ class CreateAccount extends JFrame {
         inputFirstName = new JTextField(15);
         inputLastName = new JTextField(15);
         inputid = new JTextField(15);
-        inputPassword = new JTextField(15);
+        inputPassword = new JPasswordField(15);
 
 
         //PANELS
@@ -51,7 +51,11 @@ class CreateAccount extends JFrame {
         });
 
         JButton buttonSubmit = new JButton("Submit");
-        buttonSubmit.addActionListener(e -> checkClientInfo());
+        buttonSubmit.addActionListener(e -> {
+            checkClientInfo();
+            dispose();
+            new LoginAccount();
+        });
 
         panelLabels.setLayout(new GridLayout(4, 1));
         panelInputs.setLayout(new GridLayout(4, 1));
