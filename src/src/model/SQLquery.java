@@ -174,7 +174,7 @@ public class SQLquery {
     public static DefaultTableModel ShowHistory(DefaultTableModel defaultTableModel, int id) {
 
 
-        String transactions = "SELECT * FROM Transactions WHERE account_number = ?";
+        String transactions = "SELECT account_number, tran_type, tran_value, tran_date FROM Transactions WHERE account_number = ?";
         Object[] columnData = new Object[5];
         try {
             PreparedStatement preparedStatement = bankConnection.prepareStatement(transactions);
@@ -182,10 +182,9 @@ public class SQLquery {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 columnData[0] = resultSet.getInt(1);
-                columnData[1] = resultSet.getInt(2);
-                columnData[2] = resultSet.getString(3);
-                columnData[3] = resultSet.getBigDecimal(4);
-                columnData[4] = resultSet.getString(5);
+                columnData[1] = resultSet.getString(2);
+                columnData[2] = resultSet.getBigDecimal(3);
+                columnData[3] = resultSet.getString(4);
                 defaultTableModel.addRow(columnData);
             }
         } catch (SQLException e) {
@@ -244,10 +243,5 @@ public class SQLquery {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(getBalance(6));
-        transaction(4, BigDecimal.valueOf(100));
     }
 }

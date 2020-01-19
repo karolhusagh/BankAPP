@@ -50,7 +50,7 @@ public class Client {
 
     public void deposit(BigDecimal amount) {
         balance = balance.add(amount);
-        SQLquery.addTransaction(balance, "deposit", accountNumber);
+        SQLquery.addTransaction(amount, "deposit", accountNumber);
         update();
     }
 
@@ -60,7 +60,7 @@ public class Client {
             return;
         }
         balance = balance.subtract(amount);
-        SQLquery.addTransaction(balance, "withdrawal", accountNumber);
+        SQLquery.addTransaction(amount, "withdrawal", accountNumber);
         update();
     }
 

@@ -42,9 +42,6 @@ class TransferAccount extends JFrame {
 
         buttonConfirm.addActionListener(e -> {
             transaction(client);
-            JOptionPane.showMessageDialog(null,"Transfer ended successfully");
-            dispose();
-
         });
 
         //PANELS

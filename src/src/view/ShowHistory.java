@@ -14,16 +14,15 @@ class ShowHistory extends JFrame {
         setTitle("Show history: Account " + num);
         DefaultTableModel defaultTableModel = new DefaultTableModel();
         JTable tableHistory = new JTable();
-        Object[] columns = {"Acc Nr.", "Nr.", "Transaction Type", "Value", "Transaction Date"};
+        Object[] columns = {"Acc Nr.", "Transaction Type", "Value", "Transaction Date"};
         defaultTableModel.setColumnIdentifiers(columns);
 
         tableHistory.setModel(SQLquery.ShowHistory(defaultTableModel, num));
         tableHistory.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tableHistory.getColumnModel().getColumn(0).setPreferredWidth(50);
-        tableHistory.getColumnModel().getColumn(1).setPreferredWidth(50);
-        tableHistory.getColumnModel().getColumn(2).setPreferredWidth(160);
-        tableHistory.getColumnModel().getColumn(3).setPreferredWidth(60);
-        tableHistory.getColumnModel().getColumn(4).setPreferredWidth(160);
+        tableHistory.getColumnModel().getColumn(1).setPreferredWidth(180);
+        tableHistory.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tableHistory.getColumnModel().getColumn(3).setPreferredWidth(150);
 
         // Import ImageIcon
         ImageIcon IMGlogo = new ImageIcon("img\\Bankimg.png");
